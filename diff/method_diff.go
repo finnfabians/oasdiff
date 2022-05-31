@@ -44,6 +44,7 @@ func (methodDiff *MethodDiff) removeNonBreaking() {
 	methodDiff.TagsDiff = nil
 	methodDiff.SummaryDiff = nil
 	methodDiff.DescriptionDiff = nil
+	methodDiff.OperationIDDiff = nil
 
 	if !methodDiff.DeprecatedDiff.CompareWithDefault(false, true, false) {
 		methodDiff.DeprecatedDiff = nil
@@ -80,7 +81,7 @@ func getMethodDiffInternal(config *Config, state *state, pathItem1, pathItem2 *o
 	result.TagsDiff = getStringsDiff(pathItem1.Tags, pathItem2.Tags)
 	result.SummaryDiff = getValueDiff(pathItem1.Summary, pathItem2.Summary)
 	result.DescriptionDiff = getValueDiffConditional(config.ExcludeDescription, pathItem1.Description, pathItem2.Description)
-	result.OperationIDDiff = nil; //prevents method names to cause breaking change detection
+	result.OperationIDDiff = getValueDiff(pathItem1.OperationID, pathItem2.OperationID)
 	result.ParametersDiff, err = getParametersDiff(config, state, pathItem1.Parameters, pathItem2.Parameters)
 	if err != nil {
 		return nil, err
