@@ -31,7 +31,9 @@ func (operationsDiff *OperationsDiff) removeNonBreaking() {
 	if operationsDiff.Empty() {
 		return
 	}
-
+	for _, op := range operationsDiff.Modified {
+		op.removeNonBreaking()
+	}
 	operationsDiff.Added = nil
 }
 
