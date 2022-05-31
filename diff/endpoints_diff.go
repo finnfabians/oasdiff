@@ -40,7 +40,9 @@ func (diff *EndpointsDiff) removeNonBreaking() {
 	if diff.Empty() {
 		return
 	}
-
+	for _, op := range diff.Modified {
+		op.removeNonBreaking()
+	}
 	diff.Added = nil
 }
 

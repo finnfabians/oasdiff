@@ -30,7 +30,9 @@ func (pathsDiff *PathsDiff) removeNonBreaking() {
 	if pathsDiff.Empty() {
 		return
 	}
-
+	for _, op := range pathsDiff.Modified {
+		op.OperationsDiff.removeNonBreaking()
+	}
 	pathsDiff.Added = nil
 }
 
